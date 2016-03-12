@@ -19,7 +19,7 @@ $(document).ready(function(){
           url: baseURI + "users/",
           method: "POST",
           data: {
-              // TODO: start with static date to see it working,
+                "Name": usernametext.val()// TODO: start with static date to see it working,
               // then use the jQuery .val() method to get the value of the username UI field
 
           }
@@ -37,8 +37,11 @@ $(document).ready(function(){
 					url: baseURI + "toys/",
 					method: "POST",
 					data: {
-              // TODO: start with static date to see it working,
-              // then use the jQuery .val() method to get the value of each UI field
+					    
+					    "Name":toynametext.val(),
+					    "NumberLegs":toylegstext.val(),
+					    //"ColorID": ,
+					    //"OwnerID": 9
 
 
 					}
@@ -71,10 +74,37 @@ $(document).ready(function(){
           });
 		});
   };
-	function getUsers(dropdown){ // Add users to the dropdown
-    //TODO: write the AJAX method
+  function getUsers(dropdown) { // Add users to the dropdown
+      //TODO: write the AJAX method
+      $.ajax({
+          url: baseURI + "users/",
+          method: "GET"
+      }).done(function (result) {
+          console.log(result);  // Take a peek at the data
+          $.each(result, function (k, v) {
+              dropdown.append('<option value="' + v.UserID + '">' + v.Name + '</option>');
+          });
+      });
 
-   };
+  };
+
+
+  function getToys(dropdown) { // Add users to the dropdown
+      //TODO: write the AJAX method
+      $.ajax({
+          url: baseURI + "toys/",
+          method: "GET"
+      }).done(function (result) {
+          console.log(result);  // Take a peek at the data
+          $.each(result, function (k, v) {
+              dropdown.append('<option value="' + v.ToyID + '">' + v.Name + '</option>');
+          });
+      });
+
+  };
+	
+
+   
   // Add toys to the dropdown
     function getToys(dropdown){
       //TODO: write the AJAX method
